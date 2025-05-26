@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>1학년 스마트폰 사용 실태 조사</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+    select, input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      margin-top: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      display: block;
+      margin: 30px auto;
+      padding: 12px 30px;
+      font-size: 18px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>1학년 스마트폰 사용 실태 조사</h1>
+  <form id="surveyForm">
+    <div class="question">
+      <label for="studentId">학번을 입력해주세요</label>
+      <input
+        type="text"
+        id="studentId"
+        name="studentId"
+        pattern="10(1[0-3][0-9]|2[0-3][0-9]|3[0-5])"
+        placeholder="예)10219"
+        required
+        title="10101부터 11035 사이의 숫자를 입력하세요"
+      />
+    </div>
+
+    <div class="question">
+      <label for="usageTime">1. 하루 몇 시간 스마트폰을 사용하나요?</label>
+      <select id="usageTime" name="usageTime" required>
+        <option value="" disabled selected></option>
+        <option value="1시간 미만">1시간 미만</option>
+        <option value="1~2시간">1~2시간</option>
+        <option value="2~3시간">2~3시간</option>
+        <option value="3~4시간">3~4시간</option>
+        <option value="4~5시간">4~5시간</option>
+        <option value="5시간 이상">5시간 이상</option>
+      </select>
+    </div>
+
+    <div class="question">
+      <label for="anxiety">2. 스마트폰 사용할 때 불안 증상이 있나요?</label>
+      <select id="anxiety" name="anxiety" required>
+        <option value="" disabled selected></option>
+        <option value="네">네</option>
+        <option value="아니요">아니요</option>
+      </select>
+    </div>
+
+    <div class="question">
+      <label for="daysCanHold">3. 스마트폰 사용 며칠 동안 참을 수 있나요?</label>
+      <select id="daysCanHold" name="daysCanHold" required>
+        <option value="" disabled selected></option>
+        <option value="1일 미만">1일 미만</option>
+        <option value="1~2일">1~2일</option>
+        <option value="2~3일">2~3일</option>
+        <option value="3~4일">3~4일</option>
+        <option value="4~5일">4~5일</option>
+        <option value="5일 이상">5일 이상</option>
+      </select>
+    </div>
+
+    <button type="submit">제출하기</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('surveyForm');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const studentId = form.studentId.value.trim();
+      const usageTime = form.usageTime.value;
+      const anxiety = form.anxiety.value;
+      const daysCanHold = form.daysCanHold.value;
+
+      const surveyResults = JSON.parse(localStorage.getItem('surveyResults') || '[]');
+
+      surveyResults.push({
+        studentId,
+        usageTime,
+        anxiety,
+        daysCanHold,
+      });
+
+      localStorage.setItem('surveyResults', JSON.stringify(surveyResults));
+
+      alert('설문이 제출되었습니다. 감사합니다!');
+
+      form.reset();
+    });
+  </script>
+</body>
+</html>
